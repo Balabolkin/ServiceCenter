@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="ServiceCenter.AdminPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ServiceCenter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="RequestListViewTemplate" x:DataType="local:RequestList">
+                <StackPanel x:Name="requestStack" Background="Wheat" Tag="{x:Bind id}" CornerRadius="5">
+                    <TextBlock Text="{x:Bind clientFullname}" Foreground="Black" x:Phase="1" Style="{ThemeResource BaseTextBlockStyle}" Margin="12,6,0,0"/>
+                    <TextBlock Text="{x:Bind state}" x:Phase="2" Foreground="Black" Style="{ThemeResource BaseTextBlockStyle}" Margin="12,6,0,0"/>
+                    <TextBlock Text="{x:Bind dateTime}" x:Phase="3" Foreground="Black" Style="{ThemeResource BodyTextBlockStyle}" Margin="12,6,0,6"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="ServicesListViewTemplate" x:DataType="local:ServicesList">
+                <StackPanel Background="Wheat" CornerRadius="5">
+                    <TextBlock Text="{x:Bind serviceName}" x:Phase="1" Foreground="Black" Style="{ThemeResource BaseTextBlockStyle}" Margin="12,6,0,0"/>
+                    <TextBlock Text="{x:Bind price}" x:Phase="2" Foreground="Black" Style="{ThemeResource BodyTextBlockStyle}" Margin="12,6,0,6"/>
+                </StackPanel>
+            </DataTemplate>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" x:Name="headerText" FontSize="24" Style="{ThemeResource BaseTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <ListView Grid.Row="1" x:Name="RequestListView" SelectionMode="Single" ItemTemplate="{StaticResource RequestListViewTemplate}" Margin="15, 15, 15, 15" Style="{ThemeResource BaseTextBlockStyle}" SelectionChanged="RequestListView_SelectionChanged">
+            <ListView.Header>
+                <TextBlock Margin="30, 0, 0, 0" Style="{ThemeResource BaseTextBlockStyle}">Список запросов:</TextBlock>
+            </ListView.Header>
+        </ListView>
+        <ListView Grid.Row="1" Grid.Column="1" x:Name="ServiceListView" Visibility="Collapsed" SelectionMode="None" ItemTemplate="{StaticResource ServicesListViewTemplate}" Margin="15, 15, 15, 15" Style="{ThemeResource BaseTextBlockStyle}">
+            <ListView.Header>
+                <TextBlock Margin="30, 0, 0, 0" Style="{ThemeResource BaseTextBlockStyle}">Выбранные услуги:</TextBlock>
+            </ListView.Header>
+        </ListView>
+        <TextBlock Grid.Column="2" Grid.Row="1" x:Name="descriptionTextblock" Style="{ThemeResource BaseTextBlockStyle}" Margin="30"></TextBlock>
+    </Grid>
+</Page>
